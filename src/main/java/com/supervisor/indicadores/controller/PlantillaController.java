@@ -1,6 +1,8 @@
 package com.supervisor.indicadores.controller;
 
+import com.supervisor.indicadores.dtos.DeviceTyActivity;
 import com.supervisor.indicadores.dtos.Party;
+import com.supervisor.indicadores.dtos.TicketDescription;
 import com.supervisor.indicadores.entity.Plantilla;
 import com.supervisor.indicadores.repository.IPlantillaRepository;
 
@@ -44,11 +46,27 @@ public class PlantillaController {
 
     @GetMapping("/partidas")
     @ResponseStatus(HttpStatus.OK)
-    public List<Party> getAllParties() { return plantillaRepository.findDistinctParties(); }
+    public List<Party> getAllParties() {
+        return plantillaRepository.findDistinctParties();
+    }
 
     @PostMapping("/devices")
     @ResponseStatus(HttpStatus.OK)
-    public List<String> getDevicesForParty(@RequestBody Party party ) {return plantillaRepository.findDistinctDevices(party.party_number); }
+    public List<String> getDevicesForParty(@RequestBody Party party ) {
+        return plantillaRepository.findDistinctDevices(party.getParty_number());
+    }
+
+    @PostMapping("/ticket_description")
+    @ResponseStatus(HttpStatus.OK)
+    public List<String> getTicketDescription(@RequestBody DeviceTyActivity deviceTyActivity){
+        return plantillaRepository.findDistinctTiketDescription(deviceTyActivity.getDevice(), deviceTyActivity.getActivity_type());
+    }
+
+    @PostMapping("/tech_description")
+    @ResponseStatus(HttpStatus.OK)
+    public List<String> getTechDescription(@RequestBody TicketDescription ticketDescription){
+        return plantillaRepository.findByTicketDescription(ticketDescription.getTicket_description(), ticketDescription.getDevice());
+    }
 
     /* ---- INSERTAR UNA PLANTILLA ---- */
     @PostMapping

@@ -4,18 +4,34 @@ import com.supervisor.indicadores.dtos.Party;
 import com.supervisor.indicadores.entity.Plantilla;
 import com.supervisor.indicadores.repository.IPlantillaRepository;
 
+import com.supervisor.indicadores.services.PlantillaServices;
 import jakarta.validation.Valid;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.ObjectFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartRequest;
 
+import java.beans.Encoder;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/plantillas")
+@RequiredArgsConstructor
 public class PlantillaController {
+
+    @Autowired
+    private PlantillaServices plantillaServices;
 
     @Autowired
     private IPlantillaRepository plantillaRepository;
@@ -34,9 +50,25 @@ public class PlantillaController {
     @ResponseStatus(HttpStatus.OK)
     public List<String> getDevicesForParty(@RequestBody Party party ) {return plantillaRepository.findDistinctDevices(party.party_number); }
 
+    /* ---- INSERTAR UNA PLANTILLA ---- */
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
     public void createPlantilla(@Valid @RequestBody Plantilla plantilla){
         plantillaRepository.save(plantilla);
     }
+
+    /* ---- INSERTAR VARIAS PLANTILLAS ---- */
+    @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Integer> uploadPlantillas(
+            @RequestPart("file") MultipartFile file
+            ) throws IOException {
+                return ResponseEntity.ok(plantillaServices.uploadPlantillas(file));
+    }
+
+
+
+
+
+
+
 }

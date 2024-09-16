@@ -4,7 +4,6 @@ import com.supervisor.indicadores.dtos.Party;
 import com.supervisor.indicadores.entity.Plantilla;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 

@@ -9,11 +9,14 @@ import java.util.List;
 
 public interface IPlantillaRepository extends JpaRepository<Plantilla, String> {
 
-    @Query("select distinct new com.supervisor.indicadores.dtos.Party(party_number, party_desc) from Plantilla p")
+    @Query("select distinct new com.supervisor.indicadores.dtos.Party(party_number, party_desc) from Plantilla p where party_number != 'PARTIDA 0' order by party_number ASC")
     List<Party> findDistinctParties();
 
     @Query("select distinct p.device from Plantilla p where p.party_number = ?1")
     List<String> findDistinctDevices(String party);
+
+    @Query("select distinct p.activity_type from Plantilla p where p.activity_type != 'ACTIVIDADES ADMINISTRATIVAS'")
+    List<String> findDistinctActivityTypes();
 
     @Query("select distinct p.ticket_description from Plantilla p where p.device = ?1 and p.activity_type = ?2")
     List<String> findDistinctTiketDescription(String device, String activity_type);

@@ -56,6 +56,12 @@ public class PlantillaController {
         return plantillaRepository.findDistinctDevices(party.getParty_number());
     }
 
+    @GetMapping("/activity_types")
+    @ResponseStatus(HttpStatus.OK)
+    public List<String> getActivityTypes() {
+        return plantillaRepository.findDistinctActivityTypes();
+    }
+
     @PostMapping("/ticket_description")
     @ResponseStatus(HttpStatus.OK)
     public List<String> getTicketDescription(@RequestBody DeviceTyActivity deviceTyActivity){

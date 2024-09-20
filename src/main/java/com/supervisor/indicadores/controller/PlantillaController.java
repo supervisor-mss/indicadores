@@ -84,8 +84,7 @@ public class PlantillaController {
     /* ---- INSERTAR VARIAS PLANTILLAS ---- */
     @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Integer> uploadPlantillas(
-            @RequestPart("file") MultipartFile file
-            ) throws IOException {
+            @RequestPart("file") MultipartFile file) throws IOException {
                 return ResponseEntity.ok(plantillaServices.uploadPlantillas(file));
     }
 

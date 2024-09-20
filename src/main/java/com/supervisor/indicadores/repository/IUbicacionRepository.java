@@ -11,4 +11,7 @@ public interface IUbicacionRepository extends JpaRepository<Ubicacion, String> {
 
     @Query("select distinct a.area_conocida from Ubicacion a  order by a.area_conocida ASC")
     List<String> findDistinctAreasConocidas();
+
+    @Query("select a from Ubicacion a where a.area_conocida = ?1 ")
+    List<Ubicacion> findUnidadesPorAreaConocida(String area_conocida);
 }

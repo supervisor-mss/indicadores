@@ -37,6 +37,11 @@ public class UbicacionController {
         return ubicacionRepository.findDistinctAreasConocidas();
     }
 
+    @GetMapping
+    public List<Ubicacion> getUnidadesPorAreaConocida(@RequestParam String area_conocida){
+        return ubicacionRepository.findUnidadesPorAreaConocida(area_conocida);
+    }
+
     @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Integer> uploadUbicaciones(
             @RequestPart("file") MultipartFile file) throws IOException{

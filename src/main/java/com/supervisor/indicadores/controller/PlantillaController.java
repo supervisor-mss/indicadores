@@ -71,7 +71,7 @@ public class PlantillaController {
     @PostMapping("/tech_description")
     @ResponseStatus(HttpStatus.OK)
     public List<String> getTechDescription(@RequestBody TicketDescription ticketDescription){
-        return plantillaRepository.findByTicketDescription(ticketDescription.getTicket_description(), ticketDescription.getDevice());
+        return plantillaRepository.findByTicketDescription(ticketDescription.getDevice(), ticketDescription.getTicket_description() );
     }
 
     /* ---- INSERTAR UNA PLANTILLA ---- */

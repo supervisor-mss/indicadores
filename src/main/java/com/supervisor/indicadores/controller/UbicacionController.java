@@ -1,5 +1,7 @@
 package com.supervisor.indicadores.controller;
 
+import com.supervisor.indicadores.dtos.AreaFuncional;
+import com.supervisor.indicadores.dtos.UnidadFuncional;
 import com.supervisor.indicadores.entity.Ubicacion;
 import com.supervisor.indicadores.repository.IUbicacionRepository;
 import com.supervisor.indicadores.services.UbicacionService;
@@ -33,14 +35,17 @@ public class UbicacionController {
     }
 
     @GetMapping("/areas_conocidas")
-    public List<String> getAllAreasConocidas(){
-        return ubicacionRepository.findDistinctAreasConocidas();
+    @ResponseStatus(HttpStatus.OK)
+    public List<AreaFuncional> getAllAreas(){
+        return ubicacionRepository.findDistinctAreas();
     }
 
-    @GetMapping
-    public List<Ubicacion> getUnidadesPorAreaConocida(@RequestParam String area_conocida){
-        return ubicacionRepository.findUnidadesPorAreaConocida(area_conocida);
-    }
+    @GetMapping("/unidades_funcionales")
+    @ResponseStatus(HttpStatus.OK)
+    public List<UnidadFuncional> getUnidadesPorArea(@RequestParam String id_area ){ return ubicacionRepository.findUnidadesPorArea(id_area); }
+
+
+
 
     @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Integer> uploadUbicaciones(
